@@ -1,11 +1,11 @@
 pipeline{
     agent any
-    
-    stages {
-        stage ('Hello') {
-            steps { 
-                echo 'hello world'
-                  }
-        }
+    tools {
+        maven 'MAVEN'
     }
-}
+    stages {
+        stage('Getting project from Git') {
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.com/nawres21/Continuous-Integration.git'], extensions: [], userRemoteConfigs: [[credentialsId: 'ws.id', url: 'https://github.com/nawres21/Continuous-Integration.git']]])
+            }
+        }
